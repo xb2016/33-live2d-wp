@@ -4,16 +4,8 @@ $(document).on('copy',function(){
 $('.waifu-tool .fa-home').click(function(){
     window.location = window.location.protocol+'//'+window.location.hostname+'/'
 });
-$('.waifu-tool .fa-drivers-license-o').click(function(){
-    loadlive2d('live2d','https://www.fczbl.vip/api/live2d/?p=22&model=rand');
-    showMessage('33援交有点累了，现在该我上场了',4000);
-});
 $('.waifu-tool .fa-comments').click(function(){
     showHitokoto();
-});
-$('.waifu-tool .fa-street-view').click(function (){
-    loadlive2d('live2d','https://www.fczbl.vip/api/live2d/?p=33&model=rand');
-    showMessage('我的新衣服好看嘛',4000);
 });
 $('.waifu-tool .fa-info-circle').click(function (){
     window.open('https://www.fczbl.vip/946.html');
@@ -28,9 +20,6 @@ $('.waifu-tool .fa-camera').click(function(){
     window.Live2D.captureName = 'pic.png';
     window.Live2D.captureFrame = true;
 });
-function loadModel(){
-    loadlive2d('live2d','https://www.fczbl.vip/api/live2d/?p=33');
-}
 function showHitokoto(){
     $.post("https://www.fczbl.vip/api/hitokoto/",function(result){
         showMessage(result,8000);
@@ -92,7 +81,7 @@ function showMessage(a,b){
     var f = $(".waifu").offset().top;
     $(window).scroll(function(){
         $(".waifu").animate({
-            top:$(window).scrollTop()+f+480
+            top:$(window).scrollTop()+f+330
         },
         {
             queue:false,
