@@ -8,7 +8,7 @@ $('.waifu-tool .fa-comments').click(function(){
     showHitokoto();
 });
 $('.waifu-tool .fa-info-circle').click(function (){
-    window.open('https://imjad.cn/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-02');
+    window.open('https://www.fczbl.vip/946.html');
 });
 $('.waifu-tool .fa-close').click(function(){
     sessionStorage.setItem('waifu-dsiplay','none');
@@ -20,9 +20,6 @@ $('.waifu-tool .fa-camera').click(function(){
     window.Live2D.captureName = 'pic.png';
     window.Live2D.captureFrame = true;
 });
-function loadModel(){
-    loadlive2d('live2d','https://www.fczbl.vip/api/live2d/?p=33');
-}
 function showHitokoto(){
     $.post("https://www.fczbl.vip/api/hitokoto/",function(result){
         showMessage(result,8000);
@@ -174,7 +171,7 @@ jQuery(document).ready(function($){
         showMessage('猜猜我要说些什么？');
     });
     $('.waifu-tool .fa-drivers-license-o').mouseover(function(){
-        showMessage('要见见我的姐姐嘛');
+        if(model_p===22) showMessage('要见见我的姐姐嘛'); else showMessage('什么？我的服务不好，要33回来？');
     });
     $('.waifu-tool .fa-street-view').mouseover(function(){
         showMessage('喜欢换装play吗？');
@@ -246,7 +243,7 @@ jQuery(document).ready(function($){
             var i2 = Math.floor(Math.random()*s.length);
                 $(".waifu").animate({
                     left:document.body.offsetWidth/2*(1+s[i1]),
-                    top:(window.innerHeight+document.documentElement.scrollTop-300)-(window.innerHeight-270)/2*(1+s[i2])
+                    top:(window.innerHeight+$(window).scrollTop()-300)-(window.innerHeight-270)/2*(1+s[i2])
                 },
                 {
                     duration:2000,
@@ -270,7 +267,7 @@ jQuery(document).ready(function($){
         var i2 = Math.floor(Math.random()*s.length);
             $(".waifu").animate({
             left:document.body.offsetWidth/2*(1+s[i1]),
-            top:(window.innerHeight+document.documentElement.scrollTop-300)-(window.innerHeight-270)/2*(1-s[i2])
+            top:(window.innerHeight+$(window).scrollTop()-300)-(window.innerHeight-270)/2*(1-s[i2])
             },
             {
                 duration:500,
