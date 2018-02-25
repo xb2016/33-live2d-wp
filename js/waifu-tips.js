@@ -1,5 +1,5 @@
 $(document).on('copy',function(){
-    showMessage('你都复制了些什么呀，转载要记得加上出处哦',10000);
+    showMessage('你都复制了些什么呀，转载要记得加上出处哦',8000);
 });
 $('.waifu-tool .fa-home').click(function(){
     window.location = window.location.protocol+'//'+window.location.hostname+'/'
@@ -8,7 +8,7 @@ $('.waifu-tool .fa-comments').click(function(){
     showHitokoto();
 });
 $('.waifu-tool .fa-info-circle').click(function (){
-    window.open('https://www.fczbl.vip/946.html');
+    window.open('https://imjad.cn/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-02');
 });
 $('.waifu-tool .fa-close').click(function(){
     sessionStorage.setItem('waifu-dsiplay','none');
@@ -20,6 +20,9 @@ $('.waifu-tool .fa-camera').click(function(){
     window.Live2D.captureName = 'pic.png';
     window.Live2D.captureFrame = true;
 });
+function loadModel(){
+    loadlive2d('live2d','https://www.fczbl.vip/api/live2d/?p=33');
+}
 function showHitokoto(){
     $.post("https://www.fczbl.vip/api/hitokoto/",function(result){
         showMessage(result,8000);
@@ -29,8 +32,7 @@ function showMessage(a,b){
     if(b==null) b = 10000;
     jQuery(".waifu-tips").hide().stop();
     jQuery(".waifu-tips").html(a);
-    jQuery(".waifu-tips").fadeIn();
-    jQuery(".waifu-tips").fadeTo("1",1);
+    jQuery(".waifu-tips").fadeTo("10",1);
     jQuery(".waifu-tips").fadeOut(b);
 }
 (function(){
@@ -81,14 +83,14 @@ function showMessage(a,b){
     var f = $(".waifu").offset().top;
     $(window).scroll(function(){
         $(".waifu").animate({
-            top:$(window).scrollTop()+f+330
+            top:$(window).scrollTop()+f+320
         },
         {
             queue:false,
             duration:1000
         });
     });
-    showMessage(text,4000);
+    showMessage(text,8000);
 })();
 $("#live2d").mouseover(function(){
     msgs = ["你要干嘛呀？","鼠…鼠标放错地方了！","喵喵喵？","萝莉控是什么呀？","怕怕","你看到我的小熊了吗"];
