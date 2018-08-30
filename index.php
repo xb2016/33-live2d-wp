@@ -59,7 +59,7 @@ function plugin_33_option_page() {
 //MAIN
 add_action('wp_footer','l2d_main');
 function l2d_main(){ 
-    if(get_option(plugin_33_jq)==1) echo'<script src="'.l2d_URL.'/js/jquery.min.js"></script>';
+    if(get_option('plugin_33_jq')) echo'<script src="'.l2d_URL.'/js/jquery.min.js"></script>';
     echo '
     <div class="waifu">
         <div class="waifu-tips"></div>
@@ -80,7 +80,7 @@ function l2d_main(){
 //CSS
 add_action('wp_enqueue_scripts','l2d_scripts');
 function l2d_scripts(){
-    if(get_option(plugin_33_fa)==1) wp_enqueue_style('awesome',l2d_URL.'/css/font-awesome.min.css',array(),'4.7.1');
+    if(get_option('plugin_33_fa')) wp_enqueue_style('awesome',l2d_URL.'/css/font-awesome.min.css',array(),'4.7.1');
     wp_enqueue_style('waifu',l2d_URL.'/css/waifu.min.css',array(),'1.0');
     
 }
