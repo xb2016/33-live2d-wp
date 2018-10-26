@@ -1,69 +1,94 @@
 <?php
 /*
-Plugin Name: 33-live2d
+Plugin Name: live2d看板娘(33)
 Plugin URI: https://github.com/xb2016/33-live2d-wp
-Description: 33娘的live2d看板娘插件-WordPress。这里只提供了一套服装，其它的需要你自己想办法～
+Description: 33娘的live2d看板娘插件-换装版请看 https://github.com/xb2016/poster-girl-l2d-2233
 Author: 小白-白
-Version: 1.0
+Version: 1.1
 Author URI: https://www.fczbl.vip
 */
 
-define('l2d_URL', plugins_url('', __FILE__));
+//PATH
+define('l2d_URL',plugins_url('', __FILE__));
 //SETTINGS
-add_action('admin_menu', 'plugin_33_l2d');
-function plugin_33_l2d() {
-    add_options_page('33live2d', 'L2D看板娘设置', 'manage_options', 'plugin-33', 'plugin_33_option_page');
+add_action('admin_menu','plugin_l2d');
+function plugin_l2d(){
+    add_options_page('live2d','L2D看板娘设置','manage_options','plugin-l2d','plugin_l2d_option_page');
 }
-function plugin_33_option($option_name) {
-    global $plugin_33_options;
-    if (isset($plugin_33_options[$option_name])) {
-        return $plugin_33_options[$option_name];
-    } else {
-        return null;
-    }
-}
-function plugin_33_update_options() {
-    update_option('plugin_33_jq', plugin_33_option('jq'));
-    update_option('plugin_33_fa', plugin_33_option('fa'));
-    }
-function plugin_33_option_page() {
+function plugin_l2d_option_page(){
     if(!current_user_can('manage_options')) wp_die('抱歉，您没有权限来更改设置');
     if(isset($_POST['update_options'])){
-        global $plugin_33_options;
-        $plugin_33_options['jq'] = $_POST['jq'];
-        $plugin_33_options['fa'] = $_POST['fa'];
-        plugin_33_update_options();
+        update_option('plugin_l2d_move',(isset($_POST['move'])&&$_POST['move']=='1'));
+        update_option('plugin_l2d_mobile',(isset($_POST['mobile'])&&$_POST['mobile']=='1'));
+        update_option('plugin_l2d_jq',(isset($_POST['jq'])&&$_POST['jq']=='1'));
+        update_option('plugin_l2d_fa',(isset($_POST['fa'])&&$_POST['fa']=='1'));
         echo '<div id="message" class="updated fade"><p>设置已保存</p></div>';
-    } ?>
+    }
+    $move_yes = get_option('plugin_l2d_move')?' checked ':'';
+    $move_no = get_option('plugin_l2d_move')?'':' checked ';
+    $mobile_yes = get_option('plugin_l2d_mobile')?' checked ':'';
+    $mobile_no = get_option('plugin_l2d_mobile')?'':' checked ';
+    $jq_yes = get_option('plugin_l2d_jq')?' checked ':'';
+    $jq_no = get_option('plugin_l2d_jq')?'':' checked ';
+    $fa_yes = get_option('plugin_l2d_fa')?' checked ':'';
+    $fa_no = get_option('plugin_l2d_fa')?'':' checked '; ?>
     <div class="wrap">
-        <h2>33娘L2D看板娘设置</h2>
-        <form action="options-general.php?page=plugin-33" method="post">
-        <?php wp_nonce_field('plugin-33-options'); ?>
-            <table class="form-table">
-                <tr>
-                <td>
-                   <h3>加载jQuery库</h3>
-                   <input type="text" size="3" maxlength="1" value="<?php echo(get_option('plugin_33_jq')); ?>" name="jq" />配置是否加载JQ：1是，0否<br />
-                   <h3>加载Font Awesome</h3>
-                   <input type="text" size="3" maxlength="1" value="<?php echo(get_option('plugin_33_fa')); ?>" name="fa" />配置是否加载FA：1是，0否<br />
-                   <br /><p>本插件需要加载jQuery库与Font Awesome支持，如果你的主题没有引用上述项目，请选择加载。</p><br />
-                   <p>关于提示语的修改，请直接编辑js/waifu-tips.js。</p><br />
-                   <p>需要更多服装/模型，或者需要换装功能，请自行思考解决。</p>
-				   </td>
-                </tr>
+      <h1>L2D看板娘设置</h1>
+      <form action="options-general.php?page=plugin-l2d" method="post">
+		<style>h2{font-size:20px}h3{font-size:15px;font-weight:700}th{font-weight:200}</style>
+        <?php wp_nonce_field('plugin-l2d-options'); ?>
+        <h2>设置</h2>
+          <h3>随机移动</h3>
+            <table>
+              <th>是否允许看板娘自动移动：</th>
+              <td>
+                <label><input type="radio" name="move" <?php echo $move_yes; ?> value="1" /> 是</label> <label><input type="radio" name="move" <?php echo $move_no; ?> value="0" /> 否</label>
+              </td>
+			</table>
+          <h3>移动端加载(不建议)</h3>
+            <table>
+              <th>移动端是否加载：</th>
+              <td>
+                <label><input type="radio" name="mobile" <?php echo $mobile_yes; ?> value="1" /> 是</label> <label><input type="radio" name="mobile" <?php echo $mobile_no; ?> value="0" /> 否</label>
+              </td>
+            </table><br>
+        <h2>环境</h2>
+          <p>本插件需要 jQuery 库与 Font Awesome 4.7 支持，如果你的主题没有引用上述项目，请选择加载。</p>
+          <p>关于提示语与监听对象的修改，请直接编辑 js/waifu-tips.js。</p>
+          <h3>加载jQuery库</h3>
+            <table>
+              <th>配置是否加载JQ：</th>
+              <td>
+                <label><input type="radio" name="jq" <?php echo $jq_yes; ?> value="1" /> 是</label> <label><input type="radio" name="jq" <?php echo $jq_no; ?> value="0" /> 否</label>
+              </td>
             </table>
-            <p class="submit"><input name="update_options" value="保存设置" type="submit" /></p>
-        </form>
+          <h3>加载Font Awesome 4.7</h3>
+            <table>
+              <th>配置是否加载FA：</th>
+              <td>
+                <label><input type="radio" name="fa" <?php echo $fa_yes; ?> value="1" /> 是</label> <label><input type="radio" name="fa" <?php echo $fa_no; ?> value="0" /> 否</label>
+              </td>
+            </table><br>
+            <p>支持换装的版本请看： <a href="https://github.com/xb2016/poster-girl-l2d-2233" target="_blank">https://github.com/xb2016/poster-girl-l2d-2233</a></p>
+            <p class="submit"><input name="update_options" value="保存设置" type="submit"></p>
+      </form>
     </div><?php        
 }
 //MAIN
-add_action('wp_footer','l2d_main');
-function l2d_main(){ 
-    if(get_option('plugin_33_jq')) echo'<script src="'.l2d_URL.'/js/jquery.min.js"></script>';
-    echo '
-    <div class="waifu">
+if(!wp_is_mobile()||get_option('plugin_l2d_mobile')) add_action('wp_footer','l2d_main');
+function l2d_main(){
+    if(wp_is_mobile()) $l2d_w = 130; else $l2d_w = 220;
+    if(wp_is_mobile()) $l2d_h = 150; else $l2d_h = 250;
+    if(!wp_is_mobile()||!get_option('plugin_l2d_mobile')) $mobi = 1;
+    wp_enqueue_style('waifu',l2d_URL.'/css/waifu.min.css',array(),'1.1');
+    if(get_option('plugin_l2d_fa')) wp_enqueue_style('fontawe','https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',array(),'4.7');
+    wp_enqueue_script('waifu',l2d_URL.'/js/waifu-tips.js',array(),'1.1');
+    $d2l2d = array('xb'=>l2d_URL,'move'=>get_option('plugin_l2d_move'),'mobile'=>$mobi);
+    wp_localize_script('waifu','l2d',$d2l2d); ?>
+    <div class="l2d_xb<?php if(!get_option('plugin_l2d_mobile')) echo ' mh';?>">
+        <div class="waifu">
         <div class="waifu-tips"></div>
-        <canvas id="live2d" width="230" height="250" class="live2d"></canvas>
+        <canvas id="live2d" width="<?php echo $l2d_w; ?>" height="<?php echo $l2d_h; ?>" class="live2d"></canvas>
         <div class="waifu-tool">
             <span class="fa fa-home"></span>
             <span class="fa fa-comments"></span>
@@ -71,16 +96,8 @@ function l2d_main(){
             <span class="fa fa-info-circle"></span>
             <span class="fa fa-close"></span>
         </div>
-        <script src="'.l2d_URL.'/js/waifu-tips.js"></script>
-        <script src="'.l2d_URL.'/js/live2d.js"></script>
-        <script type="text/javascript">loadlive2d("live2d","'.l2d_URL.'/33/33.json");</script>
-    </div>
-    ';
-}
-//CSS
-add_action('wp_enqueue_scripts','l2d_scripts');
-function l2d_scripts(){
-    if(get_option('plugin_33_fa')) wp_enqueue_style('awesome',l2d_URL.'/css/font-awesome.min.css',array(),'4.7.1');
-    wp_enqueue_style('waifu',l2d_URL.'/css/waifu.min.css',array(),'1.0');
-    
+        </div>
+        <?php if(get_option('plugin_l2d_jq')) echo '<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.4/dist/jquery.min.js"></script>'; ?>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xb2016/kratos-pjax@0.3.6/static/js/live2d.js"></script>
+	</div><?php
 }
